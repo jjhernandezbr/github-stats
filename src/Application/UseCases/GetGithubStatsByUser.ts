@@ -2,6 +2,8 @@ import { GetExecutedPullRequestsCount } from "./GetExecutedPullRequestsCount";
 import { UserActivityData } from "../../Domain/Entities/UserActivityData";
 import { ICsvRepository } from "../../Domain/Interfaces/ICsvRepository";
 import { CsvRepositoryImpl } from "../../Infrastructure/Repositories/CsvRepository";
+import {GetOrganization} from "./GetOrganization";
+import OrganizationRepository from "../../Infrastructure/Repositories/OrganizationRepository";
 
 export class GetGithubStatsByUser {
     userActivityData = new UserActivityData();
@@ -11,6 +13,7 @@ export class GetGithubStatsByUser {
     }
 
     public async execute(): Promise<void> {
+        console.log(new GetOrganization(new OrganizationRepository).execute('mdas-diseno-1'));
         const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.userActivityData.name, this.userActivityData.month);
         this.userActivityData.pullRequestsExecuted = await executedPullRequestsCount.execute();
         console.log(this.userActivityData.pullRequestsExecuted);
