@@ -7,5 +7,5 @@ export class UserActivityData {
     name: string
     month: string
     @Column()
-    pullRequestsExecuted: number
+    pullRequestsExecuted: string
 }

@@ -23,17 +23,16 @@ export class CsvRepositoryImpl<T> implements ICsvRepository<T> {
     }
 
     async create(UserActivityData: UserActivityData): Promise<void> {
-        const rows = Object.keys(UserActivityData).map(item => {
-            return this.columns.reduce((obj, col) => {
-                obj[col] = item[col];
-                return obj;
-            }, {});
-        });
-        const stream = fs.createWriteStream(this.filename);
+        const rows = [
+            {
+                id: UserActivityData.id,
+                name: UserActivityData.name,
+                month: UserActivityData.month,
+                pullRequesteExecuted: UserActivityData.pullRequestsExecuted,
+            },
+        ];
+        const stream = fs.createWriteStream(this.filename, { flags: 'a' });
         fastcsv.write(rows, { headers: true }).pipe(stream);
-        await new Promise((resolve, reject) => {
-            stream.on('finish', resolve);
-            stream.on('error', reject);
-        });
+        return;
     }
 }
