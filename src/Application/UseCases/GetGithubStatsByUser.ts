@@ -2,6 +2,8 @@ import { GetExecutedPullRequestsCount } from "./GetExecutedPullRequestsCount";
 import { UserActivityData } from "../../Domain/Entities/UserActivityData";
 import { ICsvRepository } from "../../Domain/Interfaces/ICsvRepository";
 import { CsvRepositoryImpl } from "../../Infrastructure/Repositories/CsvRepository";
+import {GetOrganization} from "./GetOrganization";
+import OrganizationRepository from "../../Infrastructure/Repositories/OrganizationRepository";
 
 export class GetGithubStatsByUser {
     userActivityData = new UserActivityData();

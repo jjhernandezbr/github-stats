@@ -1,3 +1,3 @@
 export interface HttpClientInterface {
-    get<T> (request: Request): Promise<Response>
+    get<T> (endpoint: string): Promise<any>
 }
