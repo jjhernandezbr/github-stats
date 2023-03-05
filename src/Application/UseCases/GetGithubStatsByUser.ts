@@ -13,7 +13,6 @@ export class GetGithubStatsByUser {
     }
 
     public async execute(): Promise<void> {
-        console.log(new GetOrganization(new OrganizationRepository).execute('mdas-diseno-1'));
         const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.userActivityData.name, this.userActivityData.month);
         this.userActivityData.pullRequestsExecuted = await executedPullRequestsCount.execute();
         console.log(this.userActivityData.pullRequestsExecuted);

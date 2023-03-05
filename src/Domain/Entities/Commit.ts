@@ -1,11 +1,17 @@
 import {GithubRepository} from "./GithubRepository";
 
 export class Commit {
-    private id: number;
+    private hash: string;
+    private additions: number;
+    private deletions: number;
 
     constructor(
-        id: number,
+        hash: string,
+        additions: number,
+        deletions: number,
     ) {
-        this.id = id;
+        this.hash = hash;
+        this.additions = additions;
+        this.deletions = deletions
     }
 }

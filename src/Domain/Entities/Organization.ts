@@ -2,7 +2,7 @@ import {GithubRepository} from "./GithubRepository";
 
 export class Organization {
     private name: string;
-    private repositories: GithubRepository[];
+    private readonly repositories: GithubRepository[];
 
     constructor(
         name: string,
@@ -10,5 +10,9 @@ export class Organization {
     ) {
         this.name = name;
         this.repositories = repositories;
+    }
+
+    public getRepositories(): GithubRepository[] {
+        return this.repositories;
     }
 }
