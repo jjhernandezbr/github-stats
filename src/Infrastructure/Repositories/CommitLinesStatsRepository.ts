@@ -5,8 +5,9 @@ import {GithubRepository} from "../../Domain/Entities/GithubRepository";
 import CommitMapper from "../Mappers/CommitMapper";
 import {ICommitRepository} from "../../Domain/Interfaces/ICommitRepository";
 import CommitLinesStats from "../../Domain/Entities/Commit/CommitLinesStats";
+import {ICommitLinesStatsRepository} from "../../Domain/Interfaces/ICommitLinesStatsRepository";
 
-export default class CommitRepository implements ICommitRepository {
+export default class CommitLinesStatsRepository implements ICommitLinesStatsRepository {
     private httpClient: HttpClientInterface;
     private mapper: CommitMapper;
     constructor(
@@ -17,21 +18,13 @@ export default class CommitRepository implements ICommitRepository {
         this.mapper = mapper;
     }
 
-     async getByFilters(
-         organization: string,
-         repository: string,
-         month: string,
-     ): Promise<Commit[]> {
-        const queryString = `?&since=${month}-01T00:00:00Z`;
-        const response = await this.httpClient.get(`/repos/${organization}/${repository}/commits${queryString}`);
-        return this.mapper.mapResponseToDomain(response.data, repository);
-    }
-
     async getLineStatsByCommitHash(
         organization: string,
         repository: string,
         hash: string,
     ): Promise<CommitLinesStats> {
-        return await this.httpClient.get(`/repos/${organization}/${repository}/commits/${hash}`);
+        const response = await this.httpClient.get(`/repos/${organization}/${repository}/commits/${hash}`);
+        console.log(response);
+        return response;
     }
 }

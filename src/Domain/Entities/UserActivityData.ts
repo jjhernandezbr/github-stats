@@ -6,6 +6,7 @@ export class UserActivityData {
     id: number
     name: string
     month: string
+    organization: string
     @Column()
     pullRequestsExecuted: string
 }
