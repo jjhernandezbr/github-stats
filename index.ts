@@ -11,7 +11,9 @@ AppDataSource.initialize().then(async () => { }).catch(error => console.log(erro
 
 const name = prompt('What is your name? ');
 const month = prompt('What month (YYYY-MM): ');
-const executedGetGithubsStats = new GetGithubStatsByUser(name, month);
+const organization = prompt('What is the organization name? ');
+
+const executedGetGithubsStats = new GetGithubStatsByUser(name, month, organization);
 executedGetGithubsStats.execute();
 
 // const { argv } = yargs.option("userName", { describe: "GitHub user name" })

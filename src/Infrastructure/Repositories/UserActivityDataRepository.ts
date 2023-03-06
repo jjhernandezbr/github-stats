@@ -8,7 +8,7 @@ export class UserActivityDataRepository {
             return activityData;
         });
     }
-    public save(pullRequestsExecuted: number) {
+    public save(pullRequestsExecuted: string) {
         const userActivityData = new UserActivityData()
         userActivityData.pullRequestsExecuted = pullRequestsExecuted;
         this.repository.save(userActivityData).then((activityData) => {
