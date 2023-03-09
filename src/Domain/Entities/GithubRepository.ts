@@ -12,9 +12,4 @@ export class GithubRepository {
     {
         return this.name;
     }
-
-    public allCommits(): Commit[]|null
-    {
-        return this.commits;
-    }
 }

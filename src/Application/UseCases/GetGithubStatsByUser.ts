@@ -8,6 +8,7 @@ import GithubRepositoryMapper from "../../Infrastructure/Mappers/GithubRepositor
 import CommitRepository from "../../Infrastructure/Repositories/CommitRepository";
 import { CountCommitsByAuthorService } from "../../Domain/Services/CountCommitsByAuthorService";
 import { OrderCommitStatsByAuthorService } from "../../Domain/Services/OrderCommitStatsByAuthorService";
+import PullRequestRepository from "../../Infrastructure/Repositories/PullRequestRepository";
 
 export class GetGithubStatsByUser {
     userActivityData = new UserActivityData();
@@ -28,18 +29,20 @@ export class GetGithubStatsByUser {
         }
         // de momento no se usa const commitCount = new CountCommitsByAuthorService().execute(commits);
         const commitStatsByAuthor = new OrderCommitStatsByAuthorService(commits).execute();
-        const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.userActivityData.name, this.userActivityData.month);
+        const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.userActivityData.name, this.userActivityData.month, new PullRequestRepository());
         this.userActivityData.pullRequestsExecuted = await executedPullRequestsCount.execute();
         const commitStats = commitStatsByAuthor[this.userActivityData.name];
-        console.log(this.userActivityData.pullRequestsExecuted);
+        console.log('');
+        console.log(`user name: ${this.userActivityData.name}`);
+        console.log(`month: ${this.userActivityData.month}`);
+        console.log('pull requests count: ' + this.userActivityData.pullRequestsExecuted);
         console.log('additions:' + commitStats.additions());
         console.log('deletions:' + commitStats.deletions());
         console.log('commit count:' + commitStats.count());
         this.userActivityData.linesAdded = commitStats.additions();
         this.userActivityData.linesDeleted = commitStats.deletions();
         this.userActivityData.commitCount = commitStats.count();
-        const csvRepository = new CsvRepositoryImpl("report.csv", ["name", "month", "organization", "pullRequestsExecuted", "linesAdded", "linesDeleted", "commitcount"]);
+        const csvRepository = new CsvRepositoryImpl("report.csv", ["name", "month", "organization", "pullRequestsExecuted", "linesAdded", "linesDeleted", "commitCount"]);
         await csvRepository.create(this.userActivityData);
-        return;
     }
 }
