@@ -1,7 +1,7 @@
 import {Commit} from "../Entities/Commit/Commit";
 
 export class CountCommitsByAuthorService {
-    public execute(commitsArray: Commit[]): Commit[]
+    public execute(commitsArray: Commit[]): number[]
     {
         const commits = [];
         commitsArray.forEach((commit) => {
