@@ -12,13 +12,13 @@ export class Commit {
     constructor(
         hash: string,
         author: string,
-        repository: string,
+        repositoryName: string,
         linesAdded: number,
         linesDeleted: number,
     ) {
         this.hash = hash;
         this.author = author;
-        this.repository = repository;
+        this.repository = repositoryName;
         this.linesAdded = linesAdded;
         this.linesDeleted = linesDeleted;
     }

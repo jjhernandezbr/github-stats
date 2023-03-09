@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import {UserActivityData} from "../../Domain/Entities/UserActivityData";
 
-export class UserActivityDataRepository {
+export class MySqlUserActivityDataRepository {
     repository = AppDataSource.getRepository(UserActivityData);
     public get() {
         return this.repository.find().then((activityData) => {
