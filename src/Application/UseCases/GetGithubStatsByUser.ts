@@ -1,13 +1,13 @@
 import { GetExecutedPullRequestsCount } from "./GetExecutedPullRequestsCount";
 import { UserActivityData } from "../../Domain/Entities/UserActivityData";
 import { CsvRepositoryImpl } from "../../Infrastructure/Repositories/CsvRepository";
-import {GetRepositoriesByOrganizationService} from "../../Domain/Services/GetRepositoriesByOrganizationService";
+import { GetRepositoriesByOrganizationService } from "../../Domain/Services/GetRepositoriesByOrganizationService";
 import GithubRepositoryRepository from "../../Infrastructure/Repositories/GithubRepositoryRepository";
-import {AxiosHttpClient} from "../../Infrastructure/Clients/AxiosHttpClient";
+import { AxiosHttpClient } from "../../Infrastructure/Clients/AxiosHttpClient";
 import GithubRepositoryMapper from "../../Infrastructure/Mappers/GithubRepositoryMapper";
 import CommitRepository from "../../Infrastructure/Repositories/CommitRepository";
-import {CountCommitsByAuthorService} from "../../Domain/Services/CountCommitsByAuthorService";
-import {OrderCommitStatsByAuthorService} from "../../Domain/Services/OrderCommitStatsByAuthorService";
+import { CountCommitsByAuthorService } from "../../Domain/Services/CountCommitsByAuthorService";
+import { OrderCommitStatsByAuthorService } from "../../Domain/Services/OrderCommitStatsByAuthorService";
 
 export class GetGithubStatsByUser {
     userActivityData = new UserActivityData();
@@ -35,7 +35,10 @@ export class GetGithubStatsByUser {
         console.log('additions:' + commitStats.additions());
         console.log('deletions:' + commitStats.deletions());
         console.log('commit count:' + commitStats.count());
-        const csvRepository = new CsvRepositoryImpl("report.csv", ["id", "name", "month", "organization", "pullRequestsExecuted"]);
+        this.userActivityData.linesAdded = commitStats.additions();
+        this.userActivityData.linesDeleted = commitStats.deletions();
+        this.userActivityData.commitCount = commitStats.count();
+        const csvRepository = new CsvRepositoryImpl("report.csv", ["name", "month", "organization", "pullRequestsExecuted", "linesAdded", "linesDeleted", "commitcount"]);
         await csvRepository.create(this.userActivityData);
         return;
     }

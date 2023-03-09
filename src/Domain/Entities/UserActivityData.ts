@@ -9,4 +9,7 @@ export class UserActivityData {
     organization: string
     @Column()
     pullRequestsExecuted: string
+    linesAdded: string
+    linesDeleted: string
+    commitCount: string
 }
