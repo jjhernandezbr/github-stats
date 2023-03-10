@@ -55,9 +55,9 @@ export class GetGithubStatsByUser {
                 this.month,
                 this.organization,
                 pullRequestsExecuted,
-                commitStats.additions(),
-                commitStats.deletions(),
-                commitStats.count(),
+                commitStats?.additions() ?? 0,
+                commitStats?.deletions() ?? 0,
+                commitStats?.count() ?? 0,
             )
             mysqlRepository.save(userActivityData);
         }
