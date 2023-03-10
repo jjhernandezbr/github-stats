@@ -1,16 +1,15 @@
 import { AppDataSource } from "../../data-source";
 import {UserActivityData} from "../../Domain/Entities/UserActivityData";
-import {QueryBuilder} from "typeorm";
+import {IUserActivityDataRepository} from "../../Domain/Interfaces/IUserActivityDataRepository";
 
-export class MySqlUserActivityDataRepository {
-    repository = AppDataSource.getRepository(UserActivityData);
-    public findByUserNameMonthAndOrganization
-    (
+export class MySqlUserActivityDataRepository implements IUserActivityDataRepository{
+    public findByUserNameMonthAndOrganization(
         name: string,
         month: string,
         organization: string,
-    ) {
-        return this.repository.findOneBy({
+    ): Promise<UserActivityData> {
+        const dataSource = AppDataSource.getRepository(UserActivityData);
+        return dataSource.findOneBy({
             name: name,
             month: month,
             organization: organization,
@@ -33,7 +32,8 @@ export class MySqlUserActivityDataRepository {
         month: string,
         organization: string,
     ): Promise<boolean> {
-        return await this.repository.findOneBy({
+        const dataSource = AppDataSource.getRepository(UserActivityData);
+        return await dataSource.findOneBy({
             name: name,
             month: month,
             organization: organization,
@@ -41,8 +41,9 @@ export class MySqlUserActivityDataRepository {
             return activityData !== null
         });
     }
-    public save(userActivityData: UserActivityData) {
-        this.repository.save(userActivityData).then((activityData) => {
+    public save(userActivityData: UserActivityData):void {
+        const dataSource = AppDataSource.getRepository(UserActivityData);
+        dataSource.save(userActivityData).then((activityData) => {
             return activityData;
         });
     }
