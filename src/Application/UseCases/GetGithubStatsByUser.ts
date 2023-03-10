@@ -9,40 +9,61 @@ import CommitRepository from "../../Infrastructure/Repositories/CommitRepository
 import { CountCommitsByAuthorService } from "../../Domain/Services/CountCommitsByAuthorService";
 import { OrderCommitStatsByAuthorService } from "../../Domain/Services/OrderCommitStatsByAuthorService";
 import PullRequestRepository from "../../Infrastructure/Repositories/PullRequestRepository";
+import {MySqlUserActivityDataRepository} from "../../Infrastructure/Repositories/MySqlUserActivityDataRepository";
 
 export class GetGithubStatsByUser {
-    userActivityData = new UserActivityData();
+    private readonly name: string;
+    private readonly month: string;
+    private readonly organization: string;
     constructor(userName: string, month: string, organization: string) {
-        this.userActivityData.name = userName;
-        this.userActivityData.month = month;
-        this.userActivityData.organization = organization;
+        this.name = userName;
+        this.month = month;
+        this.organization = organization;
     }
 
     public async execute(): Promise<void> {
-        const githubRepositoryRepository = new GithubRepositoryRepository(new AxiosHttpClient(), new GithubRepositoryMapper());
-        const organizationGithubRepositories = await new GetRepositoriesByOrganizationService(githubRepositoryRepository).execute(this.userActivityData.organization);
-        const commitRepository = new CommitRepository(new AxiosHttpClient());
-        let commits = [];
-        for (const repository of organizationGithubRepositories) {
-            const repositoryCommits = await commitRepository.getByFilters(this.userActivityData.organization, repository.getName(), this.userActivityData.month);
-            Array.prototype.push.apply(commits, repositoryCommits);
+        const mysqlRepository = new MySqlUserActivityDataRepository();
+        let userActivityData: UserActivityData;
+        const alreadyExists = await mysqlRepository.existsByUserNameMonthAndOrganization(
+            this.name,
+            this.month,
+            this.organization
+        );
+        if (alreadyExists) {
+            userActivityData = await mysqlRepository.findByUserNameMonthAndOrganization(
+                this.name,
+                this.month,
+                this.organization
+            );
         }
-        // de momento no se usa const commitCount = new CountCommitsByAuthorService().execute(commits);
-        const commitStatsByAuthor = new OrderCommitStatsByAuthorService(commits).execute();
-        const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.userActivityData.name, this.userActivityData.month, new PullRequestRepository());
-        this.userActivityData.pullRequestsExecuted = await executedPullRequestsCount.execute();
-        const commitStats = commitStatsByAuthor[this.userActivityData.name];
-        console.log('');
-        console.log(`user name: ${this.userActivityData.name}`);
-        console.log(`month: ${this.userActivityData.month}`);
-        console.log('pull requests count: ' + this.userActivityData.pullRequestsExecuted);
-        console.log('additions:' + commitStats.additions());
-        console.log('deletions:' + commitStats.deletions());
-        console.log('commit count:' + commitStats.count());
-        this.userActivityData.linesAdded = commitStats.additions();
-        this.userActivityData.linesDeleted = commitStats.deletions();
-        this.userActivityData.commitCount = commitStats.count();
+        if (!alreadyExists) {
+            const githubRepositoryRepository = new GithubRepositoryRepository(new AxiosHttpClient(), new GithubRepositoryMapper());
+            const organizationGithubRepositories = await new GetRepositoriesByOrganizationService(githubRepositoryRepository).execute(this.organization);
+            const commitRepository = new CommitRepository(new AxiosHttpClient());
+            let commits = [];
+            for (const repository of organizationGithubRepositories) {
+                const repositoryCommits = await commitRepository.getByFilters(this.organization, repository.getName(), this.month);
+                Array.prototype.push.apply(commits, repositoryCommits);
+            }
+            // de momento no se usa const commitCount = new CountCommitsByAuthorService().execute(commits);
+            const commitStatsByAuthor = new OrderCommitStatsByAuthorService(commits).execute();
+            const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.name, this.month, new PullRequestRepository());
+            const pullRequestsExecuted = await executedPullRequestsCount.execute();
+            const commitStats = commitStatsByAuthor[this.name];
+            userActivityData = new UserActivityData(
+                this.name,
+                this.month,
+                this.organization,
+                pullRequestsExecuted,
+                commitStats.additions(),
+                commitStats.deletions(),
+                commitStats.count(),
+            )
+            mysqlRepository.save(userActivityData);
+        }
+
+        console.log(userActivityData);
         const csvRepository = new CsvRepositoryImpl("report.csv", ["name", "month", "organization", "pullRequestsExecuted", "linesAdded", "linesDeleted", "commitCount"]);
-        await csvRepository.create(this.userActivityData);
+        await csvRepository.create(userActivityData);
     }
 }
