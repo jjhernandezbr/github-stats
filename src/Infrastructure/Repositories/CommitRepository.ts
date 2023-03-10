@@ -4,6 +4,7 @@ import {Commit} from "../../Domain/Entities/Commit/Commit";
 import {GithubRepository} from "../../Domain/Entities/GithubRepository";
 import {ICommitRepository} from "../../Domain/Interfaces/ICommitRepository";
 import CommitLinesStats from "../../Domain/Entities/Commit/CommitStats";
+import moment from "moment";
 
 export default class CommitRepository implements ICommitRepository {
     private httpClient: HttpClientInterface;
@@ -43,7 +44,12 @@ export default class CommitRepository implements ICommitRepository {
          repository: string,
          month: string,
      ): Promise<Commit[]> {
-        const queryString = `?&since=${month}-01T00:00:00Z&`;
+        // mover a un Value Object
+        const startMonth = moment(month).toISOString();
+        const endMonth = moment(month).add(1, 'months').toISOString();
+        const formattedStartMonth = startMonth.substring(0,19) + startMonth.substring(23, 24);
+        const formattedEndMonth = endMonth.substring(0,19) + endMonth.substring(23, 24);
+        const queryString = `?since=${formattedStartMonth}&until=${formattedEndMonth}`;
         const response = await this.httpClient.get(`/repos/${organization}/${repository}/commits${queryString}`);
         const repositoryCommits= response.data;
         const commitHashes = [];
