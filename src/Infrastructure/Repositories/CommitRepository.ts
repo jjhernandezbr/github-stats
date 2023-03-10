@@ -47,11 +47,9 @@ export default class CommitRepository implements ICommitRepository {
         // mover a un Value Object
         const startMonth = moment(month).toISOString();
         const endMonth = moment(month).add(1, 'months').toISOString();
-        console.log(startMonth);
         const formattedStartMonth = startMonth.substring(0,19) + startMonth.substring(23, 24);
         const formattedEndMonth = endMonth.substring(0,19) + endMonth.substring(23, 24);
         const queryString = `?since=${formattedStartMonth}&until=${formattedEndMonth}`;
-        console.log(queryString);
         const response = await this.httpClient.get(`/repos/${organization}/${repository}/commits${queryString}`);
         const repositoryCommits= response.data;
         const commitHashes = [];
