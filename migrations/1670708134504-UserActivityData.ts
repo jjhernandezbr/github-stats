@@ -12,8 +12,32 @@ export class UserActivityData1670708134504 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
+                        name: "name",
+                        type: "varchar",
+                    },
+                    {
+                        name: "month",
+                        type: "varchar",
+                    },
+                    {
+                        name: "organization",
+                        type: "varchar",
+                    },
+                    {
                         name: "pullRequestsExecuted",
-                        type: "int",
+                        type: "varchar",
+                    },
+                    {
+                        name: "linesAdded",
+                        type: "varchar",
+                    },
+                    {
+                        name: "linesDeleted",
+                        type: "varchar",
+                    },
+                    {
+                        name: "commitCount",
+                        type: "varchar",
                     },
                     {
                         name: "createdAt",

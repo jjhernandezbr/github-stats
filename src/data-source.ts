@@ -15,4 +15,5 @@ export const AppDataSource = new DataSource({
     entities: [UserActivityData],
     migrations: [UserActivityData1670708134504],
     subscribers: [],
+    multipleStatements: true
 });
