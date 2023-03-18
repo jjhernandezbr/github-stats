@@ -5,7 +5,7 @@ export class GetCommentsReviews {
     constructor() {
         this.commentsRepository = new CommentsRepository;
     }
-    public executed(userName: string, month: string): Promise<String> {
-        return this.commentsRepository.asyncGetCommentsProm(userName, month);
+    public async executed(userName: string, month: string): Promise<String> {
+        return await this.commentsRepository.asyncGetCommentsProm(userName, month);
     }
 }
