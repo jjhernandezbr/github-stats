@@ -25,10 +25,12 @@ export class CsvRepositoryImpl<T> implements ICsvRepository<T> {
     async create(UserActivityData: UserActivityData): Promise<void> {
         const rows = [
             {
-                id: UserActivityData.id,
                 name: UserActivityData.name,
                 month: UserActivityData.month,
                 pullRequesteExecuted: UserActivityData.pullRequestsExecuted,
+                linesAdded: UserActivityData.linesAdded,
+                linesDeleted: UserActivityData.linesDeleted,
+                commitsCount: UserActivityData.commitCount,
             },
         ];
         const stream = fs.createWriteStream(this.filename, { flags: 'a' });
