@@ -6,23 +6,23 @@ export default class CommitStats {
         this.commits = commits;
     }
 
-    public additions(): number {
+    public additions(): string {
         let total = 0;
-        for (const commit of this.commits) {
-            total = total + commit.additions();
+        if (this.commits.length !== 0) {
+            for (const commit of this.commits) {
+                total = total + commit.additions();
+            }
+            return total.toString();
         }
-        return total;
     }
 
-    public deletions(): number {
+    public deletions(): string {
         let total = 0;
-        for (const commit of this.commits) {
-            total = total + commit.deletions();
+        if (this.commits.length !== 0) {
+            for (const commit of this.commits) {
+                total = total + commit.deletions();
+            }
         }
-        return total;
-    }
-
-    public count(): number {
-        return this.commits.length - 1;
+        return total.toString();
     }
 }

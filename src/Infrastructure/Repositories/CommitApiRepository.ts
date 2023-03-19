@@ -1,9 +1,6 @@
-import { AxiosHttpClient } from "../Clients/AxiosHttpClient";
 import {HttpClientInterface} from "../../Domain/Interfaces/HttpClientInterface";
 import {Commit} from "../../Domain/Entities/Commit/Commit";
-import {GithubRepository} from "../../Domain/Entities/GithubRepository";
 import {ICommitRepository} from "../../Domain/Interfaces/ICommitRepository";
-import CommitLinesStats from "../../Domain/Entities/Commit/CommitStats";
 import moment from "moment";
 
 export default class CommitApiRepository implements ICommitRepository {
@@ -57,5 +54,16 @@ export default class CommitApiRepository implements ICommitRepository {
             commitHashes.push(commit.sha);
         });
         return commitHashes;
+    }
+
+    public async getCommitCountByFilters(
+        organization: string,
+        userName: string,
+        month: string,
+    ): Promise<string> {
+        const queryString = `author-date:${month}+org:${organization}+author:${userName}`;
+        const endpoint = `/search/commits?q=${queryString}`;
+        const response = await this.httpClient.get(endpoint);
+        return response.data.total_count;
     }
 }

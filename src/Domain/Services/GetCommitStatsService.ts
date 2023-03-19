@@ -2,7 +2,7 @@ import {Commit} from "../Entities/Commit/Commit";
 import {ICommitRepository} from "../Interfaces/ICommitRepository";
 import CommitStats from "../Entities/Commit/CommitStats";
 
-export class OrderCommitStatsByAuthorService {
+export class GetCommitStatsService {
     private commits: Commit[];
     constructor(
         commits: Commit[],
