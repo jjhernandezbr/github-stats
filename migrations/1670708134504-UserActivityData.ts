@@ -43,6 +43,11 @@ export class UserActivityData1670708134504 implements MigrationInterface {
                         name: "commentLengthAverage",
                         type: "varchar",
                     },
+
+                    {
+                        name: "pullRequestsReviewed",
+                        type: "varchar",
+                    },
                     {
                         name: "createdAt",
                         type: "timestamp",
