@@ -23,6 +23,7 @@ export class MySqlUserActivityDataRepository implements IUserActivityDataReposit
                     activityData.linesAdded,
                     activityData.linesDeleted,
                     activityData.commitCount,
+                    activityData.commentLengthAverage,
                 );
             }
         });
