@@ -1,4 +1,4 @@
-import CommentsRepository from "../../Infrastructure/Repositories/CommentsRepository";
+import CommentsApiRepository from "../../Infrastructure/Repositories/CommentsApiRepository";
 import {ICommentsRepository} from "../../Domain/Interfaces/ICommentsRepository";
 
 export class GetCommentsLengthAverage {

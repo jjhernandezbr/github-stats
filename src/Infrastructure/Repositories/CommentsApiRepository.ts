@@ -1,7 +1,7 @@
 import { ICommentsRepository } from "../../Domain/Interfaces/ICommentsRepository";
 import {HttpClientInterface} from "../../Domain/Interfaces/HttpClientInterface";
 
-export default class CommentsRepository implements ICommentsRepository {
+export default class CommentsApiRepository implements ICommentsRepository {
     private httpClient: HttpClientInterface;
     constructor(
         httpClient: HttpClientInterface

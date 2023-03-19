@@ -2,7 +2,7 @@ import { AxiosHttpClient } from "../Clients/AxiosHttpClient";
 import {IPullRequestRepository} from "../../Domain/Interfaces/IPullRequestRepository";
 import {HttpClientInterface} from "../../Domain/Interfaces/HttpClientInterface";
 
-export default class PullRequestRepository implements IPullRequestRepository{
+export default class PullRequestApiRepository implements IPullRequestRepository{
     private httpClient: HttpClientInterface
     constructor(
         httpClient: HttpClientInterface
