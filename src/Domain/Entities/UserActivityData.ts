@@ -10,6 +10,7 @@ export class UserActivityData {
         linesAdded: string,
         linesDeleted: string,
         commitCount: string,
+        commentLengthAverage: string,
     ) {
         this.name = name;
         this.month = month;
@@ -18,6 +19,7 @@ export class UserActivityData {
         this.linesAdded = linesAdded;
         this.linesDeleted = linesDeleted;
         this.commitCount = commitCount;
+        this.commentLengthAverage = commentLengthAverage
     }
     @PrimaryGeneratedColumn('uuid')
     id: string
@@ -35,16 +37,6 @@ export class UserActivityData {
     linesDeleted: string
     @Column()
     commitCount: string
-
-    public toObject(): object {
-        return {
-            name: this.name,
-            month: this.month,
-            organization: this.organization,
-            pullRequestsExecuted: this.pullRequestsExecuted,
-            linesAdded: this.linesAdded,
-            linesDeleted: this.linesDeleted,
-            commitCount: this.commitCount,
-        }
-}
+    @Column()
+    commentLengthAverage: string
 }

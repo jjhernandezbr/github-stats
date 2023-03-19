@@ -10,6 +10,7 @@ import { CountCommitsByAuthorService } from "../../Domain/Services/CountCommitsB
 import { OrderCommitStatsByAuthorService } from "../../Domain/Services/OrderCommitStatsByAuthorService";
 import PullRequestRepository from "../../Infrastructure/Repositories/PullRequestRepository";
 import {MySqlUserActivityDataRepository} from "../../Infrastructure/Repositories/MySqlUserActivityDataRepository";
+import {GetCommentsLengthAverage} from "./GetCommentsLengthAverage";
 
 export class GetGithubStatsByUser {
     private readonly name: string;
@@ -50,6 +51,7 @@ export class GetGithubStatsByUser {
             const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.name, this.month, new PullRequestRepository());
             const pullRequestsExecuted = await executedPullRequestsCount.execute();
             const commitStats = commitStatsByAuthor[this.name];
+            const commentLengthAverage = await new GetCommentsLengthAverage().execute(this.name, this.month);
             userActivityData = new UserActivityData(
                 this.name,
                 this.month,
@@ -58,7 +60,8 @@ export class GetGithubStatsByUser {
                 commitStats?.additions() ?? 0,
                 commitStats?.deletions() ?? 0,
                 commitStats?.count() ?? 0,
-            )
+                commentLengthAverage,
+            );
             mysqlRepository.save(userActivityData);
         }
 
