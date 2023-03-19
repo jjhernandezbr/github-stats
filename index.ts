@@ -14,7 +14,7 @@ import {GetCommentsLengthAverage} from "./src/Application/UseCases/GetCommentsLe
 import CommentsApiRepository from "./src/Infrastructure/Repositories/CommentsApiRepository";
 import { GetReviewedPullRequestsWithinOrganization } from "./src/Application/UseCases/GetReviewedPullRequestsWithinOrganization";
 import {GenerateGithubStatsReport} from "./src/Application/UseCases/GenerateGithubStatsReport";
-import {CsvGithubReportRepository} from "./src/Infrastructure/Repositories/CsvRepository";
+import {CsvGithubReportRepository} from "./src/Infrastructure/Repositories/CsvGithubReportRepository";
 import {SaveUserActivityData} from "./src/Application/UseCases/SaveUserActivityData";
 import {GetTotalCommitCount} from "./src/Application/UseCases/GetTotalCommitCount";
 dotenv.config();
