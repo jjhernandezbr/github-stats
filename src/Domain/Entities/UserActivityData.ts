@@ -20,6 +20,8 @@ export class UserActivityData {
     commitCount: string
     @Column()
     commentLengthAverage: string
+    @Column()
+    pullRequestsReviewed: string
     constructor(
         name: string,
         month: string,
@@ -29,6 +31,7 @@ export class UserActivityData {
         linesDeleted: string,
         commitCount: string,
         commentLengthAverage: string,
+        pullRequestsReviewed: string,
     ) {
         this.name = name;
         this.month = month;
@@ -38,5 +41,6 @@ export class UserActivityData {
         this.linesDeleted = linesDeleted;
         this.commitCount = commitCount;
         this.commentLengthAverage = commentLengthAverage
+        this.pullRequestsReviewed = pullRequestsReviewed;
     }
 }

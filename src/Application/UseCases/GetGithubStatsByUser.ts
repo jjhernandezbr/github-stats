@@ -11,6 +11,8 @@ import PullRequestApiRepository from "../../Infrastructure/Repositories/PullRequ
 import {MySqlUserActivityDataRepository} from "../../Infrastructure/Repositories/MySqlUserActivityDataRepository";
 import {GetCommentsLengthAverage} from "./GetCommentsLengthAverage";
 import CommentsApiRepository from "../../Infrastructure/Repositories/CommentsApiRepository";
+import {GetReviewedPullRequestsWithinOrganization} from "./GetReviewedPullRequestsWithinOrganization";
+import {GenerateGithubStatsReport} from "./GenerateGithubStatsReport";
 
 export class GetGithubStatsByUser {
     private readonly name: string;
@@ -42,6 +44,7 @@ export class GetGithubStatsByUser {
             const githubRepositoryRepository = new GithubRepositoryApiRepository(axiosHttpClient, new GithubRepositoryMapper());
             const organizationGithubRepositories = await new GetRepositoriesByOrganizationService(githubRepositoryRepository).execute(this.organization);
             const commitRepository = new CommitApiRepository(axiosHttpClient);
+            const pullRequestRepository = new PullRequestApiRepository(axiosHttpClient)
             let commits = [];
             for (const repository of organizationGithubRepositories) {
                 const repositoryCommits = await commitRepository.getByFilters(this.organization, repository.getName(), this.month);
@@ -49,10 +52,11 @@ export class GetGithubStatsByUser {
             }
             // de momento no se usa const commitCount = new CountCommitsByAuthorService().execute(commits);
             const commitStatsByAuthor = new OrderCommitStatsByAuthorService(commits).execute();
-            const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.name, this.month, new PullRequestApiRepository(axiosHttpClient));
+            const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.name, this.month, pullRequestRepository);
             const pullRequestsExecuted = await executedPullRequestsCount.execute();
             const commitStats = commitStatsByAuthor[this.name];
             const commentLengthAverage = await new GetCommentsLengthAverage(new CommentsApiRepository(axiosHttpClient)).execute(this.name, this.month);
+            const pullRequestsReviewedWithinOrganization = await new GetReviewedPullRequestsWithinOrganization(pullRequestRepository).execute(this.month, this.name, this.organization);
             userActivityData = new UserActivityData(
                 this.name,
                 this.month,
@@ -62,12 +66,13 @@ export class GetGithubStatsByUser {
                 commitStats?.deletions() ?? 0,
                 commitStats?.count() ?? 0,
                 commentLengthAverage,
+                pullRequestsReviewedWithinOrganization,
             );
             mysqlRepository.save(userActivityData);
         }
 
         console.log(userActivityData);
-        const csvRepository = new CsvGithubReportRepository("report.csv", ["name", "month", "organization", "pullRequestsExecuted", "linesAdded", "linesDeleted", "commitCount"]);
-        await csvRepository.create(userActivityData);
+        const csvRepository = new GenerateGithubStatsReport(new CsvGithubReportRepository());
+        await csvRepository.execute(userActivityData);
     }
 }
