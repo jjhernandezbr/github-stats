@@ -6,11 +6,11 @@ import GithubRepositoryRepository from "../../Infrastructure/Repositories/Github
 import { AxiosHttpClient } from "../../Infrastructure/Clients/AxiosHttpClient";
 import GithubRepositoryMapper from "../../Infrastructure/Mappers/GithubRepositoryMapper";
 import CommitRepository from "../../Infrastructure/Repositories/CommitRepository";
-import { CountCommitsByAuthorService } from "../../Domain/Services/CountCommitsByAuthorService";
 import { OrderCommitStatsByAuthorService } from "../../Domain/Services/OrderCommitStatsByAuthorService";
 import PullRequestRepository from "../../Infrastructure/Repositories/PullRequestRepository";
 import {MySqlUserActivityDataRepository} from "../../Infrastructure/Repositories/MySqlUserActivityDataRepository";
 import {GetCommentsLengthAverage} from "./GetCommentsLengthAverage";
+import CommentsRepository from "../../Infrastructure/Repositories/CommentsRepository";
 
 export class GetGithubStatsByUser {
     private readonly name: string;
@@ -38,9 +38,10 @@ export class GetGithubStatsByUser {
             );
         }
         if (!alreadyExists) {
-            const githubRepositoryRepository = new GithubRepositoryRepository(new AxiosHttpClient(), new GithubRepositoryMapper());
+            const axiosHttpClient = new AxiosHttpClient();
+            const githubRepositoryRepository = new GithubRepositoryRepository(axiosHttpClient, new GithubRepositoryMapper());
             const organizationGithubRepositories = await new GetRepositoriesByOrganizationService(githubRepositoryRepository).execute(this.organization);
-            const commitRepository = new CommitRepository(new AxiosHttpClient());
+            const commitRepository = new CommitRepository(axiosHttpClient);
             let commits = [];
             for (const repository of organizationGithubRepositories) {
                 const repositoryCommits = await commitRepository.getByFilters(this.organization, repository.getName(), this.month);
@@ -48,10 +49,10 @@ export class GetGithubStatsByUser {
             }
             // de momento no se usa const commitCount = new CountCommitsByAuthorService().execute(commits);
             const commitStatsByAuthor = new OrderCommitStatsByAuthorService(commits).execute();
-            const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.name, this.month, new PullRequestRepository());
+            const executedPullRequestsCount = new GetExecutedPullRequestsCount(this.name, this.month, new PullRequestRepository(axiosHttpClient));
             const pullRequestsExecuted = await executedPullRequestsCount.execute();
             const commitStats = commitStatsByAuthor[this.name];
-            const commentLengthAverage = await new GetCommentsLengthAverage().execute(this.name, this.month);
+            const commentLengthAverage = await new GetCommentsLengthAverage(new CommentsRepository(axiosHttpClient)).execute(this.name, this.month);
             userActivityData = new UserActivityData(
                 this.name,
                 this.month,

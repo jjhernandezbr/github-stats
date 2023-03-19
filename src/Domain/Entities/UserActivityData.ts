@@ -2,6 +2,24 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class UserActivityData {
+    @PrimaryGeneratedColumn('uuid')
+    id: string
+    @Column()
+    name: string
+    @Column()
+    month: string
+    @Column()
+    organization: string
+    @Column()
+    pullRequestsExecuted: string
+    @Column()
+    linesAdded: string
+    @Column()
+    linesDeleted: string
+    @Column()
+    commitCount: string
+    @Column()
+    commentLengthAverage: string
     constructor(
         name: string,
         month: string,
@@ -21,22 +39,4 @@ export class UserActivityData {
         this.commitCount = commitCount;
         this.commentLengthAverage = commentLengthAverage
     }
-    @PrimaryGeneratedColumn('uuid')
-    id: string
-    @Column()
-    name: string
-    @Column()
-    month: string
-    @Column()
-    organization: string
-    @Column()
-    pullRequestsExecuted: string
-    @Column()
-    linesAdded: string
-    @Column()
-    linesDeleted: string
-    @Column()
-    commitCount: string
-    @Column()
-    commentLengthAverage: string
 }
