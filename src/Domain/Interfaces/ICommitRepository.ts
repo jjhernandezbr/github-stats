@@ -14,4 +14,10 @@ export interface ICommitRepository {
         repository: string,
         month: string,
     ): Promise<Commit[]>;
+
+    getCommitCountByFilters(
+        organization: string,
+        userName: string,
+        month: string,
+    ): Promise<string>;
 }
