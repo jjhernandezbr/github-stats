@@ -5,7 +5,7 @@ import {GithubRepository} from "../../Domain/Entities/GithubRepository";
 import GithubRepositoryMapper from "../Mappers/GithubRepositoryMapper";
 import {HttpClientInterface} from "../../Domain/Interfaces/HttpClientInterface";
 
-export default class GithubRepositoryRepository implements IGithubRepositoryRepository {
+export default class GithubRepositoryApiRepository implements IGithubRepositoryRepository {
     private httpClient: HttpClientInterface;
     private mapper: GithubRepositoryMapper;
     constructor(

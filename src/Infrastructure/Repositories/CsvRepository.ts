@@ -1,10 +1,10 @@
 import { UserActivityData } from "../../Domain/Entities/UserActivityData";
-import { ICsvRepository } from "../../Domain/Interfaces/ICsvRepository";
+import { IGithubReportRepository } from "../../Domain/Interfaces/IGithubReportRepository";
 const fs = require('fs');
 const csv = require('csv-parse');
 import * as fastcsv from 'fast-csv';
 
-export class CsvRepositoryImpl<T> implements ICsvRepository<T> {
+export class CsvGithubReportRepository<T> implements IGithubReportRepository<T> {
     private readonly filename: string;
     private readonly columns: string[];
 

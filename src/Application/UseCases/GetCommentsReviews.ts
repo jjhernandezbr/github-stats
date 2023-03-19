@@ -1,9 +1,9 @@
-import CommentsRepository from "../../Infrastructure/Repositories/CommentsRepository";
+import CommentsApiRepository from "../../Infrastructure/Repositories/CommentsApiRepository";
 
 export class GetCommentsReviews {
-    commentsRepository: CommentsRepository;
+    commentsRepository: CommentsApiRepository;
     constructor() {
-        this.commentsRepository = new CommentsRepository;
+        this.commentsRepository = new CommentsApiRepository;
     }
     public async executed(userName: string, month: string): Promise<String> {
         return await this.commentsRepository.asyncGetCommentsProm(userName, month);

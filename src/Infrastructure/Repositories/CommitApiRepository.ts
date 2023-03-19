@@ -6,7 +6,7 @@ import {ICommitRepository} from "../../Domain/Interfaces/ICommitRepository";
 import CommitLinesStats from "../../Domain/Entities/Commit/CommitStats";
 import moment from "moment";
 
-export default class CommitRepository implements ICommitRepository {
+export default class CommitApiRepository implements ICommitRepository {
     private httpClient: HttpClientInterface;
     constructor(
         httpClient: HttpClientInterface,
