@@ -1,6 +1,6 @@
-import {GithubRepository} from "../Entities/GithubRepository";
-import {Commit} from "../Entities/Commit/Commit";
-import CommitLinesStats from "../Entities/Commit/CommitStats";
+import {GithubRepository} from "../GithubRepository";
+import {Commit} from "../Commit";
+import CommitLinesStats from "../CommitStats";
 
 export interface ICommitLinesStatsRepository {
     getLineStatsByCommitHash(

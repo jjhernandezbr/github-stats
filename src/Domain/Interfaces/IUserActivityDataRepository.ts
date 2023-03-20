@@ -1,7 +1,7 @@
-import {GithubRepository} from "../Entities/GithubRepository";
-import {Commit} from "../Entities/Commit/Commit";
-import CommitLinesStats from "../Entities/Commit/CommitStats";
-import {UserActivityData} from "../Entities/UserActivityData";
+import {GithubRepository} from "../GithubRepository";
+import {Commit} from "../Commit";
+import CommitLinesStats from "../CommitStats";
+import {UserActivityData} from "../UserActivityData";
 
 export interface IUserActivityDataRepository {
     findByUserNameMonthAndOrganization(

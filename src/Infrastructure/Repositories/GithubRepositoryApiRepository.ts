@@ -1,7 +1,7 @@
 import { AxiosHttpClient } from "../Clients/AxiosHttpClient";
-import {Organization} from "../../Domain/Entities/Organization";
+import {Organization} from "../../Domain/Organization";
 import {IGithubRepositoryRepository} from "../../Domain/Interfaces/IGithubRepositoryRepository";
-import {GithubRepository} from "../../Domain/Entities/GithubRepository";
+import {GithubRepository} from "../../Domain/GithubRepository";
 import GithubRepositoryMapper from "../Mappers/GithubRepositoryMapper";
 import {HttpClientInterface} from "../../Domain/Interfaces/HttpClientInterface";
 

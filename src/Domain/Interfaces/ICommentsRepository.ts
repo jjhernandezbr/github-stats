@@ -1,3 +1,3 @@
 export interface ICommentsRepository {
-    asyncGetCommentsProm(userName: string, month: string): Promise<string>;
+    asyncGetCommentsProm(userName: string, month: string): Promise<string[]>;
 }

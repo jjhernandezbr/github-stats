@@ -8,11 +8,10 @@ export default class CommentsApiRepository implements ICommentsRepository {
     ) {
         this.httpClient = httpClient;
     }
-    async asyncGetCommentsProm(userName: string, month: string): Promise<string> {
+    async asyncGetCommentsProm(userName: string, month: string): Promise<string[]> {
         const response = await this.httpClient.get(`/search/issues?q=type:pr+commenter:${userName}+created:${month}`);
         const data = response.data;
         let comments: string[] = [];
-        let commentslength = 0;
         for (var item of data.items) {
             const responseComments = await this.httpClient.get(item.comments_url.toString().replace("https://api.github.com", ""));
             if (typeof responseComments.data[0] != "undefined") {
@@ -20,10 +19,6 @@ export default class CommentsApiRepository implements ICommentsRepository {
                 console.log("****---------------------------------****");
             }
         }
-        for (var comment of comments) {
-            commentslength = commentslength + comment.length;
-        }
-        const commentprom = commentslength !== 0 ? commentslength / comments.length : 0;
-        return commentprom.toString();
+        return comments;
     }
 }

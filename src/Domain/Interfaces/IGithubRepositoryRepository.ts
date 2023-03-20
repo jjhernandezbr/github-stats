@@ -1,4 +1,4 @@
-import {GithubRepository} from "../Entities/GithubRepository";
+import {GithubRepository} from "../GithubRepository";
 
 export interface IGithubRepositoryRepository {
     getByOrganizationName(name: string): Promise<GithubRepository[]>;

@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import {UserActivityData} from "./Domain/Entities/UserActivityData";
+import {UserActivityData} from "./Domain/UserActivityData";
 import {UserActivityData1670708134504} from "../migrations/1670708134504-UserActivityData";
 
 export const AppDataSource = new DataSource({

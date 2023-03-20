@@ -1,4 +1,4 @@
-import {Commit} from "./Commit/Commit";
+import {Commit} from "./Commit";
 
 export class GithubRepository {
     private readonly name: string;

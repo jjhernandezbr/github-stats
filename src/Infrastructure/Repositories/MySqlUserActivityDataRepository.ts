@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../data-source";
-import {UserActivityData} from "../../Domain/Entities/UserActivityData";
+import {UserActivityData} from "../../Domain/UserActivityData";
 import {IUserActivityDataRepository} from "../../Domain/Interfaces/IUserActivityDataRepository";
 
 export class MySqlUserActivityDataRepository implements IUserActivityDataRepository{

@@ -1,5 +1,5 @@
 import {HttpClientInterface} from "../../Domain/Interfaces/HttpClientInterface";
-import {Commit} from "../../Domain/Entities/Commit/Commit";
+import {Commit} from "../../Domain/Commit";
 import {ICommitRepository} from "../../Domain/Interfaces/ICommitRepository";
 import moment from "moment";
 

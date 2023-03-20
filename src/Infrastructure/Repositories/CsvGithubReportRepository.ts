@@ -1,4 +1,4 @@
-import { UserActivityData } from "../../Domain/Entities/UserActivityData";
+import { UserActivityData } from "../../Domain/UserActivityData";
 import { IGithubReportRepository } from "../../Domain/Interfaces/IGithubReportRepository";
 const fs = require('fs');
 const csv = require('csv-parse');

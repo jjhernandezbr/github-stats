@@ -2,7 +2,7 @@ import { GetRepositoriesByOrganizationService } from "../../Domain/Services/GetR
 import { GetCommitStatsService } from "../../Domain/Services/GetCommitStatsService";
 import {IGithubRepositoryRepository} from "../../Domain/Interfaces/IGithubRepositoryRepository";
 import {ICommitRepository} from "../../Domain/Interfaces/ICommitRepository";
-import CommitStats from "../../Domain/Entities/Commit/CommitStats";
+import CommitStats from "../../Domain/CommitStats";
 
 export class GetTotalAdditionsAndDeletions {
     private readonly githubRepositoryRepository: IGithubRepositoryRepository;

@@ -1,5 +1,5 @@
 import {IGithubReportRepository} from "../../Domain/Interfaces/IGithubReportRepository";
-import {UserActivityData} from "../../Domain/Entities/UserActivityData";
+import {UserActivityData} from "../../Domain/UserActivityData";
 
 export class GenerateGithubStatsReport {
     private csvGithubStatsReportRepository: IGithubReportRepository<any>
