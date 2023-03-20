@@ -1,6 +1,6 @@
-import {Commit} from "../Entities/Commit/Commit";
+import {Commit} from "../Commit";
 import {ICommitRepository} from "../Interfaces/ICommitRepository";
-import CommitStats from "../Entities/Commit/CommitStats";
+import CommitStats from "../CommitStats";
 
 export class GetCommitStatsService {
     private commits: Commit[];

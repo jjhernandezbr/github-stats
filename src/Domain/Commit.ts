@@ -1,6 +1,6 @@
-import {GithubRepository} from "../GithubRepository";
+import {GithubRepository} from "./GithubRepository";
 import CommitLinesStats from "./CommitStats";
-import {User} from "../User";
+import {User} from "./User";
 
 export class Commit {
     private readonly hash: string;

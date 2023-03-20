@@ -2,7 +2,7 @@ import { GetTotalAdditionsAndDeletions } from "./src/Application/UseCases/GetTot
 import { AppDataSource } from "./src/data-source"
 import * as dotenv from "dotenv";
 import {MySqlUserActivityDataRepository} from "./src/Infrastructure/Repositories/MySqlUserActivityDataRepository";
-import {UserActivityData} from "./src/Domain/Entities/UserActivityData";
+import {UserActivityData} from "./src/Domain/UserActivityData";
 import {AxiosHttpClient} from "./src/Infrastructure/Clients/AxiosHttpClient";
 import GithubRepositoryApiRepository from "./src/Infrastructure/Repositories/GithubRepositoryApiRepository";
 import GithubRepositoryMapper from "./src/Infrastructure/Mappers/GithubRepositoryMapper";

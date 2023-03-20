@@ -9,6 +9,12 @@ export class GetCommentsLengthAverage {
         this.commentsRepository = commentsRepository;
     }
     public async execute(userName: string, month: string): Promise<string> {
-        return await this.commentsRepository.asyncGetCommentsProm(userName, month);
+        const comments = await this.commentsRepository.asyncGetCommentsProm(userName, month);
+        let commentsLength = 0;
+        for (const comment of comments) {
+            commentsLength = commentsLength + comment.length;
+        }
+        const commentsLengthAverage = commentsLength !== 0 ? commentsLength / comments.length : 0;
+        return commentsLengthAverage.toString();
     }
 }

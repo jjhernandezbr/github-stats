@@ -1,4 +1,4 @@
-import { UserActivityData } from "../Entities/UserActivityData";
+import { UserActivityData } from "../UserActivityData";
 
 export interface IGithubReportRepository<T> {
   findAll(): Promise<T[]>;

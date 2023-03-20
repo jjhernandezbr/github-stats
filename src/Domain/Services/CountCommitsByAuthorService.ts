@@ -1,4 +1,4 @@
-import {Commit} from "../Entities/Commit/Commit";
+import {Commit} from "../Commit";
 
 export class CountCommitsByAuthorService {
     public execute(commitsArray: Commit[]): number[]

@@ -1,5 +1,5 @@
-import {GithubRepository} from "../../Domain/Entities/GithubRepository";
-import {Organization} from "../../Domain/Entities/Organization";
+import {GithubRepository} from "../../Domain/GithubRepository";
+import {Organization} from "../../Domain/Organization";
 
 export default class GithubRepositoryMapper {
     public mapResponseToDomain(response): GithubRepository[] {
